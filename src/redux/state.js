@@ -1,11 +1,16 @@
+let rerenderEntireTree = () => {
+    console.log('State is changed')
+}
+
 let state = {
     profilePage: {
         posts: [
             {id: 1, message: "Hi, how are you?", likesCount: 15},
-            {id: 1, message: "It's my first post", likesCount: 20},
-            {id: 1, message: "It's my second post", likesCount: 25},
-            {id: 1, message: "It's my third post", likesCount: 30},
+            {id: 2, message: "It's my first post", likesCount: 20},
+            {id: 3, message: "It's my second post", likesCount: 25},
+            {id: 4, message: "It's my third post", likesCount: 30},
         ],
+        newPostText: "IT",
     },
     dialogsPage: {
         dialogs: [
@@ -22,6 +27,7 @@ let state = {
             {id: 4, message: "Let's go!"},
             {id: 5, message: "Yo!"},
         ],
+        newMessageText: "new message"
     },
     sidebar: {},
     NavLinkData: [
@@ -34,3 +40,47 @@ let state = {
 }
 
 export default state;
+
+// Create pattern - observer.
+
+export const subscribe = (observer) => {
+    rerenderEntireTree = observer
+}
+
+// Add post on ProfilePage
+
+export const addPost = () => {
+    let newPost = {
+        id: 5,
+        message: state.profilePage.newPostText,
+        likesCount: 0
+    };
+    state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText = ''
+    rerenderEntireTree(state)
+}
+
+export const updateNewPostText = (newText) => {
+    state.profilePage.newPostText = newText
+    rerenderEntireTree(state)
+}
+
+// Add Message in dialogs
+
+export const addMessageToDialog = () => {
+    let newMessage = {
+        id: 5,
+        message: state.dialogsPage.newMessageText
+    }
+    state.dialogsPage.messages.push(newMessage)
+    state.dialogsPage.newMessageText = ''
+    rerenderEntireTree(state)
+}
+
+export const updateTextMessage = (newTextMessage) => {
+    state.dialogsPage.newMessageText = newTextMessage
+    rerenderEntireTree(state)
+}
+
+
+
