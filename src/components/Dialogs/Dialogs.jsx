@@ -10,7 +10,6 @@ const Dialogs = (props) => {
     let dialogsElement = props.dialogsPage.dialogs.map(d => (<DialogItem name={d.name} id={d.id}/>))
     let messagesElements = props.dialogsPage.messages.map(m => (<Message message={m.message} id={m.id}/>))
 
-    let newMessageElement = React.createRef();
 
     const addMessage = () => {
         props.dispatch(sendMessageActionCreator())
@@ -31,7 +30,6 @@ const Dialogs = (props) => {
                 <div>{  messagesElements  }</div>
                 <div>
                     <textarea value={props.dialogsPage.newMessageBody}
-                              ref={newMessageElement}
                               onChange={onChangeUpdateMessageHandler}/>
                 </div>
                 <div>
